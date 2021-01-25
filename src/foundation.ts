@@ -259,7 +259,6 @@ export function referencePath(element: Element): string {
   return path;
 }
 
-
 /** @returns a new [[`tag`]] element owned by [[`doc`]]. */
 export function createElement(
   doc: Document,
