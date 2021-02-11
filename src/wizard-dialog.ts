@@ -118,6 +118,7 @@ export class WizardDialog extends LitElement {
       ?open=${index === this.pageIndex}
       heading=${page.title}
       @closed=${this.onClosed}
+      ?hideActions=${!page.primary && !page.secondary}
     >
       <div id="wizard-content">${page.content}</div>
       ${index > 0
@@ -135,12 +136,14 @@ export class WizardDialog extends LitElement {
             icon="${page.secondary.icon}"
             label="${page.secondary.label}"
           ></mwc-button>`
-        : html`<mwc-button
+        : page.primary
+        ? html`<mwc-button
             slot="secondaryAction"
             dialogAction="close"
             label="${translate('cancel')}"
             style="--mdc-theme-primary: var(--mdc-theme-error)"
-          ></mwc-button>`}
+          ></mwc-button>`
+        : html``}
       ${page.primary
         ? html`<mwc-button
             slot="primaryAction"
