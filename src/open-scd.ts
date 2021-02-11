@@ -347,6 +347,15 @@ export class OpenSCD extends Setting(
             () => html`<editor-1 .doc=${this.doc}></editor-1>`
           ),
       },
+      {
+        name: 'mapping.name',
+        id: 'mapping',
+        icon: 'coronavirus',
+        getContent: (): Promise<TemplateResult> =>
+          plugin('./editors/Mapping.js', 'editor-2').then(
+            () => html`<editor-2 .doc=${this.doc}></editor-2>`
+          ),
+      },
     ],
   };
 
