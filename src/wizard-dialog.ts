@@ -118,7 +118,9 @@ export class WizardDialog extends LitElement {
       ?open=${index === this.pageIndex}
       heading=${page.title}
       @closed=${this.onClosed}
-      ?hideActions=${!page.primary && !page.secondary}
+      ?hideActions=${!page.primary &&
+      !page.secondary &&
+      index === this.wizard.length - 1}
     >
       <div id="wizard-content">${page.content}</div>
       ${index > 0
