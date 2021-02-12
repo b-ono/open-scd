@@ -67,42 +67,75 @@ export default class MappingPlugin extends LitElement {
         content:
           options.serviceType === 'Report'
             ? [
-                html`
-                  <mwc-list activatable multi
-                    >${Array.from(
-                      options.input.querySelectorAll(
-                        ':root > IED > AccessPoint > Server > LDevice > LN0 > ReportControl,' +
-                          ':root > IED > AccessPoint > Server > LDevice > LN > ReportControl'
-                      )
-                    ).map(
-                      rc =>
-                        html`<mwc-list-item hasMeta
-                          >${rc.getAttribute('name')}<mwc-icon slot="meta"
-                            >info</mwc-icon
-                          ></mwc-list-item
-                        >`
-                    )}</mwc-list
-                  >
-                  <mwc-list activatable
-                    >${Array.from(
-                      options.output.querySelectorAll(
-                        ':root > IED > AccessPoint > Server > LDevice > LN0,' +
-                          ':root > IED > AccessPoint > Server > LDevice > LN'
-                      )
-                    ).map(
-                      ln =>
-                        html`<mwc-list-item twoline>
-                          <span
-                            >${(ln.getAttribute('lnClass') ?? '') +
-                            (ln.getAttribute('inst') ?? '')}</span
-                          >
-                          <span slot="secondary"
-                            >${ln.parentElement!.getAttribute('inst')}</span
-                          >
-                        </mwc-list-item>`
-                    )}</mwc-list
-                  >
-                `,
+                // wrap in div for two column grid display of content
+                html`<div
+                  class="wrapper"
+                  style="display: grid; grid-template-columns: 1fr 1fr;"
+                >
+                  <style>
+                    .wrapper > mwc-textfield,
+                    .wrapper > mwc-list {
+                      display: block;
+                      margin-top: 8px;
+                      margin-right: 16px;
+                      margin-left: 16px;
+                    }
+
+                    .wrapper > mwc-list:nth-child(2n) {
+                      border-right: 2px var(--base1) solid;
+                      margin-right: 0px;
+                      padding-right: 16px;
+                    }
+                  </style>
+                  ${[
+                    html` <mwc-textfield
+                      icontrailing="search"
+                      outlined=""
+                      label="Sources"
+                    ></mwc-textfield>`,
+                    html`<mwc-textfield
+                      icontrailing="search"
+                      outlined=""
+                      label="Sink"
+                    ></mwc-textfield>`,
+                    html`
+                      <mwc-list activatable multi
+                        >${Array.from(
+                          options.input.querySelectorAll(
+                            ':root > IED > AccessPoint > Server > LDevice > LN0 > ReportControl,' +
+                              ':root > IED > AccessPoint > Server > LDevice > LN > ReportControl'
+                          )
+                        ).map(
+                          rc =>
+                            html`<mwc-list-item hasMeta
+                              >${rc.getAttribute('name')}<mwc-icon slot="meta"
+                                >info</mwc-icon
+                              ></mwc-list-item
+                            >`
+                        )}</mwc-list
+                      >
+                      <mwc-list activatable
+                        >${Array.from(
+                          options.output.querySelectorAll(
+                            ':root > IED > AccessPoint > Server > LDevice > LN0,' +
+                              ':root > IED > AccessPoint > Server > LDevice > LN'
+                          )
+                        ).map(
+                          ln =>
+                            html`<mwc-list-item twoline>
+                              <span
+                                >${(ln.getAttribute('lnClass') ?? '') +
+                                (ln.getAttribute('inst') ?? '')}</span
+                              >
+                              <span slot="secondary"
+                                >${ln.parentElement!.getAttribute('inst')}</span
+                              >
+                            </mwc-list-item>`
+                        )}</mwc-list
+                      >
+                    `,
+                  ]}
+                </div>`,
               ]
             : [],
       },
